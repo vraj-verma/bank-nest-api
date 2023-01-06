@@ -15,38 +15,40 @@ export class BankController {
     async openAccount(
         @Req() req: Request,
         @Res() res: Response,
-        @Body(new ValidationPipe(BankValidation.AccountOpenSchema)) userData:Bank
+        @Body(new ValidationPipe(BankValidation.AccountOpenSchema)) userData: Bank
     ) {
         userData.ac_number = Date.now();
         const accountnumber = await this.bankService.openAccount(userData);
-        if(!accountnumber){
+        if (!accountnumber) {
             throw new HttpException(
                 'Account not created, try again later',
                 HttpStatus.BAD_REQUEST
             );
         }
-        res.status(200).json({...userData});
+        res.status(200).json({ ...userData });
     }
 
     // Get Accounts
     @Get()
     async getAccounts(
-        @Req() req:Request,
-        @Res() res:Response,
-    ){
-
+        @Req() req: Request,
+        @Res() res: Response,
+    ) {
         const response = await this.bankService.getAccounts();
-        if(!response){
+        if (!response) {
             throw new HttpException(
                 'Unable to fetch accounts, try again',
                 HttpStatus.BAD_REQUEST
             );
         }
         const totalAccount = await this.bankService.getAccountCount();
-        res.status(200).json({
-            total: totalAccount,
-            ...response
-        });
+        res.status(200).json(
+            // {
+            //     total: totalAccount,
+            //     ...response
+            // }
+           response
+        );
 
     }
 }

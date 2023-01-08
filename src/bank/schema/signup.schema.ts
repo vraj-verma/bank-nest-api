@@ -1,23 +1,22 @@
 
-import { Prop, SchemaFactory } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+
 
 export type signupDocument = AccountSignup & Document;
-
+@Schema()
 export class AccountSignup{
-    @Prop()
-    aadhaar_card:number;
 
     @Prop()
     name:string;
 
     @Prop()
-    pan_card?:string;
+    email:string;
 
     @Prop()
-    dob?:Date;
+    password:string;
 
     @Prop()
-    address:string;
+    gender:string;
 }
 
 export const SignupSchema = SchemaFactory.createForClass(AccountSignup);
